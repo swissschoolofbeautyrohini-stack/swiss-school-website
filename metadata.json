@@ -1,0 +1,8 @@
+{
+  "name": "Swiss School of Beauty Janakpuri",
+  "description": "Landing page for Swiss School of Beauty courses in Janakpuri.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
