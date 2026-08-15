@@ -24,35 +24,31 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
     };
 
     try {
-      await fetch('https://script.google.com/macros/s/AKfycbyDOcPy4bfe8a_tfrTmZ8ZjFACE1wnEpU2nV-vN_M9me_kupWa6zVdFPKWgnXbeUG4Pcw/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+    await fetch('https://script.google.com/macros/s/AKfycbyD0CPy4bfe8a_tfrTmZ8ZJFACE1WnEpU2N-vN_M9me_kupWa6zVdFPKWgnXbeUG4Pcw/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    // GOOGLE ADS CONVERSION TRACKING CODE 
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-18214496526/6FifCMTz0Ecel7SrO1D'
       });
-
-      // 👇 GOOGLE ADS CONVERSION TRACKING CODE 👇
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'conversion', {
-          'send_to': 'AW-18214496526/6FifCMTxz0EcEl7SrO1D'
-        });
-      }
-      // 👆 GOOGLE ADS CODE END 👆
-
-      alert('Thank you! Your enquiry has been submitted successfully.');
-      form.reset();
-      if (formType === 'popup') {
-        setIsPopupOpen(false);
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
     }
-  };
+
+    // Yahan success hone par state reset ya popup close ka code aa jayega
+    setSubmitted(true);
+    setLoading(false);
+
+  } catch (error) {
+    console.error(error);
+    setLoading(false); // Error aane par loading roklein taaki button wapas thik ho jaye
+  }
+};
   useEffect(() => {
     // Open the popup shortly after landing
     const timer = setTimeout(() => {
@@ -418,9 +414,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
                 <button
   type="submit"
   disabled={loading}
-  onClick={(e) => {
-    if (loading) e.preventDefault(); // Agar already loading hai toh click ko rok dega
-  }}
   className={`w-full py-3 px-6 rounded-xl bg-[#d4af37] text-black font-semibold flex items-center justify-center gap-2 transition-all shadow-lg ${
     loading ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'hover:bg-[#c39f30] active:scale-[0.98] cursor-pointer'
   }`}
