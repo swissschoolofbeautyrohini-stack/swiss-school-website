@@ -418,7 +418,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
                 <button
   type="submit"
   disabled={loading}
-  className="w-full py-3 px-6 rounded-xl bg-[#d4af37] text-black font-semibold flex items-center justify-center gap-2 hover:bg-[#c39f30] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+  onClick={(e) => {
+    if (loading) e.preventDefault(); // Agar already loading hai toh click ko rok dega
+  }}
+  className={`w-full py-3 px-6 rounded-xl bg-[#d4af37] text-black font-semibold flex items-center justify-center gap-2 transition-all shadow-lg ${
+    loading ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'hover:bg-[#c39f30] active:scale-[0.98] cursor-pointer'
+  }`}
 >
   {loading ? (
     <>
