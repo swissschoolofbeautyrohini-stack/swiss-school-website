@@ -8,8 +8,9 @@ import Image from 'next/image';
 export default function LandingPage() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-const [submitted, setSubmitted] = useState(false);
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: string) => {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: string) => {
     e.preventDefault();
     setLoading(true);
 
@@ -24,31 +25,32 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
     };
 
     try {
-    await fetch('https://script.google.com/macros/s/AKfycbyD0CPy4bfe8a_tfrTmZ8ZJFACE1WnEpU2N-vN_M9me_kupWa6zVdFPKWgnXbeUG4Pcw/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    // GOOGLE ADS CONVERSION TRACKING CODE 
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'conversion', {
-        'send_to': 'AW-18214496526/6FifCMTz0Ecel7SrO1D'
+      await fetch('https://script.google.com/macros/s/AKfycbyD0CPy4bfe8a_tfrTmZ8ZJFACE1WnEpU2N-vN_M9me_kupWa6zVdFPKWgnXbeUG4Pcw/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
+
+      // GOOGLE ADS CONVERSION TRACKING CODE 
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
+          'send_to': 'AW-18214496526/6FifCMTz0Ecel7SrO1D'
+        });
+      }
+
+      setSubmitted(true);
+      setIsPopupOpen(false); // Close popup on successful submission
+      form.reset();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // Yahan success hone par state reset ya popup close ka code aa jayega
-    setSubmitted(true);
-    setLoading(false);
-
-  } catch (error) {
-    console.error(error);
-    setLoading(false); // Error aane par loading roklein taaki button wapas thik ho jaye
-  }
-};
   useEffect(() => {
     // Open the popup shortly after landing
     const timer = setTimeout(() => {
@@ -131,12 +133,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
       <section className="pt-40 pb-20 md:pt-56 md:pb-32 px-4 relative overflow-hidden flex flex-col items-center text-center">
         <div className="absolute inset-0 z-0 opacity-20">
           <Image
-  src="/cover.jpeg"
-  alt="Salon Background"
-  fill
-  className="object-cover"
-  referrerPolicy="no-referrer"
-/>
+            src="/cover.jpeg"
+            alt="Salon Background"
+            fill
+            className="object-cover"
+            referrerPolicy="no-referrer"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] via-[#1a1a1a]/80 to-[#1a1a1a]"></div>
         </div>
         
@@ -173,7 +175,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
           <div className="grid md:grid-cols-[1.05fr_1.35fr] gap-12 lg:gap-20 items-stretch">
             <div className="relative h-full min-h-[420px] md:min-h-[560px] overflow-hidden rounded-[2rem] shadow-2xl shadow-black/10">
               <Image
-               src="/makeup.jpg"
+                src="/makeup.jpg"
                 alt="Professional precision beauty makeup portrait"
                 fill
                 className="object-cover"
@@ -234,35 +236,35 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-      title: 'Makeup Courses',
-      image: '/makeup2.jpg',
-      desc: 'Build practical and theoretical knowledge related to professional makeup artistry.',
-    },
+                title: 'Makeup Courses',
+                image: '/makeup2.jpg',
+                desc: 'Build practical and theoretical knowledge related to professional makeup artistry.',
+              },
               {
-      title: 'Hair Courses',
-      image: '/hair.jpg',
-      desc: 'Master cutting, styling, finishing and modern professional hair techniques.',
-    },
+                title: 'Hair Courses',
+                image: '/hair.jpg',
+                desc: 'Master cutting, styling, finishing and modern professional hair techniques.',
+              },
               {
-      title: 'Beauty Courses',
-      image: '/beauty.jpg',
-      desc: 'Learn skin, beauty therapy, client handling and essential salon services.',
-    },
+                title: 'Beauty Courses',
+                image: '/beauty.jpg',
+                desc: 'Learn skin, beauty therapy, client handling and essential salon services.',
+              },
               {
-      title: 'Cosmetology Courses',
-      image: '/cosmetology.jpg',
-      desc: 'Comprehensive learning covering beauty, hair, skin and salon practice.',
-    },
+                title: 'Cosmetology Courses',
+                image: '/cosmetology.jpg',
+                desc: 'Comprehensive learning covering beauty, hair, skin and salon practice.',
+              },
               {
-      title: 'Nail Courses',
-      image: '/nail.jpg',
-      desc: 'Learn nail art, extension techniques and modern salon-ready nail skills.',
-    },
+                title: 'Nail Courses',
+                image: '/nail.jpg',
+                desc: 'Learn nail art, extension techniques and modern salon-ready nail skills.',
+              },
               {
-      title: 'Nutrition & Wellness',
-      image: '/nutritionist.jpg',
-      desc: 'Expand your learning with wellness-focused career-oriented programs.',
-    }
+                title: 'Nutrition & Wellness',
+                image: '/nutritionist.jpg',
+                desc: 'Expand your learning with wellness-focused career-oriented programs.',
+              }
             ].map((course, i) => (
               <div key={i} className="bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all group flex flex-col">
                 <div className="relative h-60 w-full overflow-hidden shrink-0">
@@ -390,51 +392,51 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
              <form className="space-y-6" onSubmit={(e) => handleSubmit(e, 'contact')}>
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
-                  <input type="text" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" placeholder="Enter your name" />
+                  <input type="text" name="name" required className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" placeholder="Enter your name" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
-                  <input type="tel" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" placeholder="Enter your phone number" />
+                  <input type="tel" name="phone" required className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" placeholder="Enter your phone number" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Interested Course</label>
                   <div className="relative">
-                    <select className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-gray-300 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all appearance-none cursor-pointer">
+                    <select name="course" required className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-gray-300 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all appearance-none cursor-pointer">
                       <option value="">Select a course</option>
                       <option value="Makeup Courses">Makeup Courses</option>
-<option value="Hair Courses">Hair Courses</option>
-<option value="Beauty Courses">Beauty Courses</option>
-<option value="Cosmetology Courses">Cosmetology Courses</option>
-<option value="Nail Courses">Nail Courses</option>
-<option value="Nutrition & Wellness">Nutrition & Wellness</option>
+                      <option value="Hair Courses">Hair Courses</option>
+                      <option value="Beauty Courses">Beauty Courses</option>
+                      <option value="Cosmetology Courses">Cosmetology Courses</option>
+                      <option value="Nail Courses">Nail Courses</option>
+                      <option value="Nutrition & Wellness">Nutrition & Wellness</option>
                     </select>
                     <ChevronRight className="w-5 h-5 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 rotate-90 pointer-events-none" />
                   </div>
                 </div>
                 <button
-  type="submit"
-  disabled={loading}
-  className={`w-full py-3 px-6 rounded-xl bg-[#d4af37] text-black font-semibold flex items-center justify-center gap-2 transition-all shadow-lg ${
-    loading ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'hover:bg-[#c39f30] active:scale-[0.98] cursor-pointer'
-  }`}
->
-  {loading ? (
-    <>
-      <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      Submitting Enquiry...
-    </>
-  ) : (
-    <>
-      Submit Enquiry 
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-      </svg>
-    </>
-  )}
-</button>
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full py-3 px-6 rounded-xl bg-[#d4af37] text-black font-semibold flex items-center justify-center gap-2 transition-all shadow-lg ${
+                    loading ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'hover:bg-[#c39f30] active:scale-[0.98] cursor-pointer'
+                  }`}
+                >
+                  {loading ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Submitting Enquiry...
+                    </>
+                  ) : (
+                    <>
+                      Submit Enquiry 
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </>
+                  )}
+                </button>
               </form>
             </div>
           </div>
@@ -510,6 +512,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-gold" />
                       <input 
                         type="text" 
+                        name="name"
                         required
                         className="w-full bg-white border border-[#e5d9c5] rounded-2xl pl-12 pr-4 py-3.5 text-black placeholder:text-gray-400 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" 
                         placeholder="Enter your full name" 
@@ -524,6 +527,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-gold" />
                       <input 
                         type="tel" 
+                        name="phone"
                         required
                         className="w-full bg-white border border-[#e5d9c5] rounded-2xl pl-12 pr-4 py-3.5 text-black placeholder:text-gray-400 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" 
                         placeholder="Enter mobile number" 
@@ -538,6 +542,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-gold" />
                       <input 
                         type="email" 
+                        name="email"
                         required
                         className="w-full bg-white border border-[#e5d9c5] rounded-2xl pl-12 pr-4 py-3.5 text-black placeholder:text-gray-400 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all" 
                         placeholder="Enter email address" 
@@ -551,17 +556,18 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
                     <div className="relative">
                       <GraduationCap className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-gold" />
                       <select 
+                        name="course"
                         required
                         className="w-full bg-white border border-[#e5d9c5] rounded-2xl pl-12 pr-10 py-3.5 text-black focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all appearance-none cursor-pointer invalid:text-gray-400"
                         defaultValue=""
                       >
                         <option value="" disabled className="text-gray-400">Choose your course</option>
-                        <option value="makeup" className="text-black">Makeup Courses</option>
-                        <option value="hair" className="text-black">Hair Courses</option>
-                        <option value="beauty" className="text-black">Beauty Courses</option>
-                        <option value="cosmetology" className="text-black">Cosmetology Courses</option>
-                        <option value="nail" className="text-black">Nail Courses</option>
-                        <option value="nutrition" className="text-black">Nutrition & Wellness</option>
+                        <option value="Makeup Courses" className="text-black">Makeup Courses</option>
+                        <option value="Hair Courses" className="text-black">Hair Courses</option>
+                        <option value="Beauty Courses" className="text-black">Beauty Courses</option>
+                        <option value="Cosmetology Courses" className="text-black">Cosmetology Courses</option>
+                        <option value="Nail Courses" className="text-black">Nail Courses</option>
+                        <option value="Nutrition & Wellness" className="text-black">Nutrition & Wellness</option>
                       </select>
                       <ChevronRight className="w-5 h-5 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 rotate-90 pointer-events-none" />
                     </div>
@@ -569,9 +575,24 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: strin
 
                   <button 
                     type="submit" 
-                    className="w-full mt-2 py-4 rounded-2xl bg-[#dcb163] hover:bg-[#c99f52] text-black font-bold text-lg flex items-center justify-center gap-2 transition-colors"
+                    disabled={loading}
+                    className={`w-full mt-2 py-4 rounded-2xl bg-[#dcb163] text-black font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-lg ${
+                      loading ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'hover:bg-[#c99f52] active:scale-[0.98] cursor-pointer'
+                    }`}
                   >
-                    Submit Enquiry <ArrowRight className="w-5 h-5" />
+                    {loading ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Submitting Enquiry...
+                      </>
+                    ) : (
+                      <>
+                        Submit Enquiry <ArrowRight className="w-5 h-5" />
+                      </>
+                    )}
                   </button>
 
                   <p className="text-center text-xs text-gray-500 mt-6 leading-relaxed">
