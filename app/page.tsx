@@ -10,41 +10,49 @@ export default function LandingPage() {
   const [loading, setLoading] = useState(false);
 const [submitted, setSubmitted] = useState(false);
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: string) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  const form = e.currentTarget;
-  const formData = new FormData(form);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-  const data = {
-    name: formData.get('name') || form.querySelector<HTMLInputElement>('input[type="text"]')?.value,
-    phone: formData.get('phone') || form.querySelector<HTMLInputElement>('input[type="tel"]')?.value,
-    email: formData.get('email') || form.querySelector<HTMLInputElement>('input[type="email"]')?.value,
-    course: formData.get('course') || form.querySelector<HTMLSelectElement>('select')?.value,
-  };
+    const data = {
+      name: formData.get('name') || form.querySelector<HTMLInputElement>('input[type="text"]')?.value,
+      phone: formData.get('phone') || form.querySelector<HTMLInputElement>('input[type="tel"]')?.value,
+      email: formData.get('email') || form.querySelector<HTMLInputElement>('input[type="email"]')?.value,
+      course: formData.get('course') || form.querySelector<HTMLSelectElement>('select')?.value,
+    };
 
-  try {
-    await fetch('https://script.google.com/macros/s/AKfycbyDOcPy4bfe8a_tfrTmZ8ZjFACE1wnEpU2nV-vN_M9me_kupWa6zVdFPKWgnXbeUG4Pcw/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      await fetch('https://script.google.com/macros/s/AKfycbyDOcPy4bfe8a_tfrTmZ8ZjFACE1wnEpU2nV-vN_M9me_kupWa6zVdFPKWgnXbeUG4Pcw/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-    alert('Thank you! Your enquiry has been submitted successfully.');
-    form.reset();
-    if (formType === 'popup') {
-      setIsPopupOpen(false);
+      // 👇 GOOGLE ADS CONVERSION TRACKING CODE 👇
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
+          'send_to': 'AW-18214496526/6FifCMTxz0EcEl7SrO1D'
+        });
+      }
+      // 👆 GOOGLE ADS CODE END 👆
+
+      alert('Thank you! Your enquiry has been submitted successfully.');
+      form.reset();
+      if (formType === 'popup') {
+        setIsPopupOpen(false);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error('Error submitting form:', error);
-    alert('Something went wrong. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
   useEffect(() => {
     // Open the popup shortly after landing
     const timer = setTimeout(() => {
