@@ -17,21 +17,23 @@ export default function LandingPage() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    const data = {
-      name: formData.get('name') || form.querySelector<HTMLInputElement>('input[type="text"]')?.value,
-      phone: formData.get('phone') || form.querySelector<HTMLInputElement>('input[type="tel"]')?.value,
-      email: formData.get('email') || form.querySelector<HTMLInputElement>('input[type="email"]')?.value,
-      course: formData.get('course') || form.querySelector<HTMLSelectElement>('select')?.value,
-    };
+    const name = (formData.get('name') || form.querySelector<HTMLInputElement>('input[type="text"]')?.value || '').toString();
+    const phone = (formData.get('phone') || form.querySelector<HTMLInputElement>('input[type="tel"]')?.value || '').toString();
+    const email = (formData.get('email') || form.querySelector<HTMLInputElement>('input[type="email"]')?.value || '').toString();
+    const course = (formData.get('course') || form.querySelector<HTMLSelectElement>('select')?.value || '').toString();
+
+    // Google Apps Script ke liye URLSearchParams zaroori hai taaki e.parameter match ho
+    const formBody = new URLSearchParams();
+    formBody.append('name', name);
+    formBody.append('phone', phone);
+    formBody.append('email', email);
+    formBody.append('course', course);
 
     try {
       await fetch('https://script.google.com/macros/s/AKfycbyD0CPy4bfe8a_tfrTmZ8ZJFACE1WnEpU2N-vN_M9me_kupWa6zVdFPKWgnXbeUG4Pcw/exec', {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+        body: formBody,
       });
 
       // GOOGLE ADS CONVERSION TRACKING CODE 
@@ -42,7 +44,7 @@ export default function LandingPage() {
       }
 
       setSubmitted(true);
-      setIsPopupOpen(false); // Close popup on successful submission
+      setIsPopupOpen(false);
       form.reset();
     } catch (error) {
       console.error(error);
