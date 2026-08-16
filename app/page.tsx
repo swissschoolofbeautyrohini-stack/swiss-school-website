@@ -25,7 +25,8 @@ export default function LandingPage() {
     };
 
     try {
-      await fetch('https://script.google.com/macros/s/AKfycbyD0CPy4bfe8a_tfrTmZ8ZJFACE1WnEpU2N-vN_M9me_kupWa6zVdFPKWgnXbeUG4Pcw/exec', {
+      // NAYA WALA URL
+      await fetch('https://script.google.com/macros/s/AKfycbxdME6IJP1B5XCd0KBxE-MdS-NyXdxx7l3hI8LiImdm6rqgC1od8sGbH6O0BPqflvMMzg/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
@@ -35,21 +36,24 @@ export default function LandingPage() {
       });
 
       // GOOGLE ADS CONVERSION TRACKING CODE 
-      if (typeof window !== 'undefined' && (window as any).gtag) {
+      if (typeof window !== 'undefined' && typeof (window as any).gtag !== 'undefined') {
         (window as any).gtag('event', 'conversion', {
           'send_to': 'AW-18214496526/6FifCMTz0Ecel7SrO1D'
         });
+        console.log("Google Ads Conversion Fired!"); 
+      } else {
+        console.warn("Google Ads error: gtag is missing! Check your layout.tsx file.");
       }
 
       setSubmitted(true);
-      setIsPopupOpen(false);
+      setIsPopupOpen(false); // form bharte hi popup close hoga
       form.reset();
     } catch (error) {
-      console.error(error);
+      console.error("Form error:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }; // <-- Yeh bracket pichhli baar miss ho gaya tha!
 
   useEffect(() => {
     // Open the popup shortly after landing
