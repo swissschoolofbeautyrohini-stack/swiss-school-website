@@ -26,7 +26,7 @@ export default function LandingPage() {
 
     try {
       // NAYA WALA URL
-      await fetch('https://script.google.com/macros/s/AKfycbxdME6IJP1B5XCd0KBxE-MdS-NyXdxx7l3hI8LiImdm6rqgC1od8sGbH6O0BPqflvMMzg/exec', {
+      await fetch('https://script.google.com/macros/s/AKfycbzsQntOOYGt5hBBKOONRPGjcKqyA2pgJNZRDz2CckbFXNTowhUZ2f3Umsva-kXb5K68Fw/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
