@@ -36,12 +36,14 @@ export default function LandingPage() {
       });
 
       // GOOGLE ADS CONVERSION TRACKING CODE (100% Bulletproof for Next.js)
+      // GOOGLE ADS CONVERSION TRACKING CODE (100% Bulletproof for Next.js)
       if (typeof window !== 'undefined') {
         (window as any).dataLayer = (window as any).dataLayer || [];
         (window as any).gtag = (window as any).gtag || function() { (window as any).dataLayer.push(arguments); };
         
+        // YAHAN LABEL THEEK KAR DIYA HAI
         (window as any).gtag('event', 'conversion', {
-          'send_to': 'AW-18214496526/6FifCMTz0Ecel7SrO1D'
+          'send_to': 'AW-18214496526/6FifCMTxzOEceI7SrO1D'
         });
         console.log("Google Ads Conversion Queued & Fired!"); 
       }
