@@ -37,15 +37,22 @@ export default function LandingPage() {
 
       // GOOGLE ADS CONVERSION TRACKING CODE (100% Bulletproof for Next.js)
       // GOOGLE ADS CONVERSION TRACKING CODE (100% Bulletproof for Next.js)
+      // GOOGLE ADS CONVERSION TRACKING CODE (100% Bulletproof for Next.js)
       if (typeof window !== 'undefined') {
         (window as any).dataLayer = (window as any).dataLayer || [];
         (window as any).gtag = (window as any).gtag || function() { (window as any).dataLayer.push(arguments); };
         
-        // YAHAN LABEL THEEK KAR DIYA HAI
+        // 1. ENHANCED CONVERSIONS KE LIYE USER DATA BHEJNA (NAYA CODE)
+        (window as any).gtag('set', 'user_data', {
+          "email": data.email,
+          "phone_number": data.phone 
+        });
+
+        // 2. MAIN CONVERSION EVENT FIRE KARNA
         (window as any).gtag('event', 'conversion', {
           'send_to': 'AW-18214496526/6FifCMTxzOEceI7SrO1D'
         });
-        console.log("Google Ads Conversion Queued & Fired!"); 
+        console.log("Google Ads Conversion & User Data Fired!"); 
       }
 
       setSubmitted(true);
